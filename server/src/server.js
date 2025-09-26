@@ -1,10 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { connectToDatabase } from './db.js';
 import interviewRouter from './routes/interview.js';
 
-dotenv.config();
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));

@@ -1,7 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const client = (() => {
-  const key = process.env.GOOGLE_API_KEY || "AIzaSyC5916s3EsHq61J93baOliTYzxCJEBko3A";
+  const key = process.env.GOOGLE_API_KEY;
   if (!key) return null;
   return new GoogleGenerativeAI(key);
 })();
