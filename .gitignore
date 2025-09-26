@@ -1,0 +1,28 @@
+# Root ignores
+node_modules/
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+logs/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+coverage/
+
+# Env files
+.env
+.env.*
+server/.env
+server/.env.*
+client/.env
+client/.env.*
+
+# Client build
+client/dist/
+client/.vite/
+
+# Server
+server/node_modules/
+
+

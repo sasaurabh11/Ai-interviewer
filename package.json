@@ -1,0 +1,9 @@
+{
+  "name": "ai-interviewer",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ]
+}
+

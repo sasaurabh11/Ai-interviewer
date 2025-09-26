@@ -1,0 +1,14 @@
+:root { color-scheme: light dark; }
+body { margin: 0; font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; background: #0b0f13; color: #e6edf3; }
+.container { max-width: 800px; margin: 40px auto; padding: 0 16px; }
+header { margin-bottom: 24px; }
+.card { background: #11161c; border: 1px solid #223; border-radius: 12px; padding: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.3); }
+.qmeta { opacity: 0.8; font-size: 14px; margin-bottom: 8px; }
+textarea { width: 100%; background: #0e1318; color: #e6edf3; border: 1px solid #334; border-radius: 8px; padding: 10px; }
+.actions { display: flex; gap: 12px; margin-top: 12px; }
+button { background: #222a33; color: #e6edf3; border: 1px solid #334; border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+button.primary { background: #1f6feb; border-color: #1f6feb; }
+.scores { display: grid; grid-template-columns: 1fr; gap: 6px; margin: 10px 0; }
+.error { color: #ff7b72; }
+.summary { opacity: 0.9; }
+

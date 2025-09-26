@@ -1,0 +1,10 @@
+node_modules/
+logs/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+coverage/
+.env
+.env.*
+
+
