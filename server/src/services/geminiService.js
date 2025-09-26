@@ -7,7 +7,7 @@ const client = (() => {
 })();
 
 const FALLBACK_QUESTIONS = [
-  { id: 'q1', text: 'Tell me about yourself and why you are interested in this SDE Intern role.', category: 'behavioral' },
+  { id: 'q1', text: 'Hi, I\'m your AI interviewer for the SDE Intern role. Please tell me about yourself, your background, and why you are interested in this position.', category: 'behavioral' },
   { id: 'q2', text: 'Explain the time and space complexity of a HashMap and a Linked List.', category: 'technical' },
   { id: 'q3', text: 'Given an array of integers, find two numbers that add up to a target.', category: 'problem-solving' },
   { id: 'q4', text: 'Describe a time you faced a challenging bug and how you resolved it.', category: 'behavioral' },
@@ -21,20 +21,31 @@ export async function generateInterviewQuestions(role) {
 
     const model = client.getGenerativeModel({ model: 'gemma-3-27b-it' });
     
-    const prompt = `Generate exactly 6 interview questions for a ${role} position. 
+    const randomSeed = Math.floor(Math.random() * 10000);
+    const timestamp = Date.now();
+    
+    const prompt = `Generate exactly 6 unique interview questions for a ${role} position. Use this random seed: ${randomSeed} and timestamp: ${timestamp} to ensure variety.
+    
+    IMPORTANT: The first question MUST start with "Hi, I'm your AI interviewer for the ${role} role." and should be an introduction question asking about the candidate's background and interest in the position.
     
     Return ONLY a valid JSON array in this exact format:
     [
-      {"id": "q1", "text": "question text here", "category": "technical"},
-      {"id": "q2", "text": "question text here", "category": "behavioral"},
+      {"id": "q1", "text": "Hi, I'm your AI interviewer for the ${role} role. [introduction question here]", "category": "behavioral"},
+      {"id": "q2", "text": "question text here", "category": "technical"},
       {"id": "q3", "text": "question text here", "category": "problem-solving"},
-      {"id": "q4", "text": "question text here", "category": "communication"},
+      {"id": "q4", "text": "question text here", "category": "behavioral"},
       {"id": "q5", "text": "question text here", "category": "system-design"},
       {"id": "q6", "text": "question text here", "category": "technical"}
     ]
     
-    Categories must be one of: technical, behavioral, problem-solving, communication, system-design
-    Questions should be concise and role-appropriate.
+    Requirements:
+    - Generate completely new and varied questions each time
+    - Categories must be one of: technical, behavioral, problem-solving, communication, system-design
+    - Questions should be concise, role-appropriate, and different from common interview questions
+    - Mix different difficulty levels and topics
+    - Avoid repetitive or overly similar questions
+    - The first question must always be an introduction with the specified greeting
+    
     Do not include any explanation or additional text - only the JSON array.`;
 
     const result = await model.generateContent(prompt);
@@ -56,11 +67,21 @@ export async function generateInterviewQuestions(role) {
     
     if (!validQuestions) throw new Error('Invalid question structure');
     
+    if (!questions[0].text.startsWith(`Hi, I'm your AI interviewer for the ${role} role`)) {
+      questions[0].text = `Hi, I'm your AI interviewer for the ${role} role. Please tell me about yourself, your background, and why you are interested in this position.`;
+      questions[0].category = 'behavioral';
+    }
+    
     return questions;
     
   } catch (e) {
     console.warn('Gemini questions fallback used:', e.message);
-    return FALLBACK_QUESTIONS;
+    const fallbackWithGreeting = [...FALLBACK_QUESTIONS];
+    fallbackWithGreeting[0] = { 
+      ...fallbackWithGreeting[0], 
+      text: `Hi, I'm your AI interviewer for the ${role} role. Please tell me about yourself, your background, and why you are interested in this position.`
+    };
+    return fallbackWithGreeting;
   }
 }
 
